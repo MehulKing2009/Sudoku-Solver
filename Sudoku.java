@@ -1,4 +1,7 @@
 
+import com.google.common.base.Stopwatch;
+
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,14 +12,19 @@ class Solution {
 
         Solution s = new Solution();
         for(String z : s.testcase) {
+            Stopwatch stopwatch = Stopwatch.createStarted();
             char[][] x = s.String_to_char(z);
             if (s.solveSudoku(x)){
 
             System.out.println("+---------------------------+");
+                System.out.println("Took :- "+stopwatch.stop());
             for (char[] y : x) {
                 System.out.println(Arrays.toString(y));
             }
+
             System.out.println("+---------------------------+" + "\n");
+
+
         }
         else{
             System.out.println("Invalid Input");
@@ -30,10 +38,11 @@ class Solution {
             for(int j = 0 ; j< 9 ; j++){
 
                 char c = x.charAt(i * 9 + j);
-                switch (c){
-                 case '.','0'-> matrix[i][j]='.';
-                 case '1','2','3','4','5','6','7','8','9'-> matrix[i][j] = c;
-                 default -> throw new IllegalArgumentException("Invalid Input");
+
+                if(c == '.' || c== '0'){
+                    matrix[i][j]='.';
+                } else if (c >= '1' && c <= '9') {
+                    matrix[i][j] = c;
                 }
             }
         }
@@ -200,7 +209,7 @@ class Solution {
 
 
     }
-    
+
 
     public static boolean counntisone(char[] board,char target) {
         int count = 0;
@@ -232,4 +241,5 @@ class Solution {
     };
 
 }
+
 

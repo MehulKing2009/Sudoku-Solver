@@ -24,21 +24,15 @@ class Solution {
     }
         }
     public char[][] String_to_char(String x){
-        if(x.length() != 81)return null;
+        if(x.length() != 81)return new char[0][0];
         char[][] matrix = new char[9][9];
         for(int i = 0 ; i< 9 ; i++){
             for(int j = 0 ; j< 9 ; j++){
 
              switch (x.charAt(i*9 + j)){
-                 case '.','0'->{
-                     matrix[i][j]='.';
-                 }
-                 case '1','2','3','4','5','6','7','8','9'->{
-                     matrix[i][j] = x.charAt(i*9 + j);
-                 }
-                 default -> {
-                     throw new IllegalArgumentException("Invalid Input");
-                 }
+                 case '.','0'-> matrix[i][j]='.';
+                 case '1','2','3','4','5','6','7','8','9'-> matrix[i][j] = x.charAt(i*9 + j);
+                 default -> throw new IllegalArgumentException("Invalid Input");
                 }
             }
         }
@@ -80,20 +74,18 @@ class Solution {
 
                         // row and col based elimination
                         for(int col = 0 ; col < 9 ; col++){
-                            if(set[i][col].size()== 1 && col!=j){
-                                if(set[i][j].removeAll(set[i][col])){
+                            if(set[i][col].size()== 1 && col!=j && set[i][j].removeAll(set[i][col])){
                                     changed=true;
                                 }
 
-                            }
+
                         }
 
                         for(int row = 0 ; row < 9 ; row++){
-                            if(set[row][j].size()== 1 && row!=i){
-                                if(set[i][j].removeAll(set[row][j])){
+                            if(set[row][j].size()== 1 && row!=i && set[i][j].removeAll(set[row][j])){
                                     changed=true;
                                 }
-                            }
+
                         }
                         // for 3*3 box elimination
                         int rs = i / 3 * 3;
@@ -101,12 +93,10 @@ class Solution {
                         for (int row = rs; row < rs + 3; row++) {
                             for (int col = cs; col < cs + 3; col++) {
                                 if (!(i == row && j == col)
-                                        && set[row][col].size() == 1) {
-
-                                    if (set[i][j].removeAll(set[row][col])) {
+                                        && set[row][col].size() == 1 && set[i][j].removeAll(set[row][col])) {
                                         changed = true;
                                     }
-                                }
+
                             }
                         }
                     }
@@ -201,7 +191,7 @@ class Solution {
         }
         for(int x = 0 ; x<9;x+=3){
             for(int y = 0 ; y<9;y+=3){
-                if (!counntisone(new char[] {board[0+x][0+y],board[0+x][1+y],board[0+x][2+y],board[1+x][0+y],board[1+x][1+y],board[1+x][2+y],board[2+x][0+y],board[2+x][1+y],board[2+x][2+y]}, checkingfor)) {return false;}
+                if (!counntisone(new char[] {board[x][y],board[x][1+y],board[x][2+y],board[1+x][y],board[1+x][1+y],board[1+x][2+y],board[2+x][y],board[2+x][1+y],board[2+x][2+y]}, checkingfor)) {return false;}
 
             }
         }
@@ -209,7 +199,7 @@ class Solution {
 
 
     }
-    //   if (!counntisone(new char[] {board[0][0],board[0][1],board[0][3],board[1][0],board[1][1],board[1][2],board[2][0],board[2][1],board[2][2]}, checkingfor)) {return false;}
+    
 
     public static boolean counntisone(char[] board,char target) {
         int count = 0;

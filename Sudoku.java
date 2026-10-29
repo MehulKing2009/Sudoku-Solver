@@ -29,9 +29,10 @@ class Solution {
         for(int i = 0 ; i< 9 ; i++){
             for(int j = 0 ; j< 9 ; j++){
 
-             switch (x.charAt(i*9 + j)){
+                char c = x.charAt(i * 9 + j);
+                switch (c){
                  case '.','0'-> matrix[i][j]='.';
-                 case '1','2','3','4','5','6','7','8','9'-> matrix[i][j] = x.charAt(i*9 + j);
+                 case '1','2','3','4','5','6','7','8','9'-> matrix[i][j] = c;
                  default -> throw new IllegalArgumentException("Invalid Input");
                 }
             }
